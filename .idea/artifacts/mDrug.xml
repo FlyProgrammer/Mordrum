@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="mDrug">
+    <output-path>$PROJECT_DIR$/out/artifacts/mDrug</output-path>
+    <root id="archive" name="mDrug.jar">
+      <element id="module-output" name="mDrug" />
+      <element id="file-copy" path="$PROJECT_DIR$/mDrug/src/plugin.yml" />
+    </root>
+  </artifact>
+</component>
