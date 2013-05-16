@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mDota">
+    <output-path>$PROJECT_DIR$/out/artifacts/mDota</output-path>
+    <root id="archive" name="unnamed.jar">
+      <element id="module-output" name="mDota" />
+      <element id="file-copy" path="$PROJECT_DIR$/mDota/src/config.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/mDota/src/plugin.yml" />
+    </root>
+  </artifact>
+</component>
