@@ -1,0 +1,25 @@
+
+# == DotaMinecraft Config ==
+
+# SET THIS TO TRUE
+Enabled: false
+
+# The name of the Dota world. May not contain spaces or periods
+WorldName: Minecraft_dota
+
+# Color players' nametag according to their team (red or blue)
+colorNameTag: true
+
+# What happens on player death
+PlayersKeepItems: true
+PlayersKeepLevel: true
+
+# Recall command
+RecallEnabled: false
+RecallDelay: 6
+
+# Remove mob armor (since zombies and skeletons can sometimes spawn with armor)
+removeMobArmor: false
+
+# Gives mobs leather helmet (so they don't burn in the sun)
+giveMobsHelmet: true
