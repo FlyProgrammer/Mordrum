@@ -1,7 +1,7 @@
 name: DotaMinecraft
 main: com.mordrum.mdota.DotaMinecraft
 author: SirSavary
-version: 0.1
+version: 0.2
 commands:
     dota:
         description: Dota commands
