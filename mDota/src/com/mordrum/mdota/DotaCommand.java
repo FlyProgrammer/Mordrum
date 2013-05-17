@@ -79,7 +79,6 @@ public class DotaCommand implements CommandExecutor {
 					if (jointeam == 1) {
 						plugin.RedCount++;
 						plugin.playerlist.put(player.getName(), 1);
-						player.setPlayerListName(ChatColor.RED + player.getName());
 						player.setDisplayName(ChatColor.RED + player.getName());
 						player.teleport(plugin.RedPoint);
 						player.setBedSpawnLocation(plugin.RedBed);
@@ -89,7 +88,6 @@ public class DotaCommand implements CommandExecutor {
 					else {
 						plugin.BlueCount++;
 						plugin.playerlist.put(player.getName(), 2);
-						player.setPlayerListName(ChatColor.BLUE + player.getName());
 						player.setDisplayName(ChatColor.BLUE + player.getName());
 						player.teleport(plugin.BluePoint);
 						player.setBedSpawnLocation(plugin.BlueBed);
