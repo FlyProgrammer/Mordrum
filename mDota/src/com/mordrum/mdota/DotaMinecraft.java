@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class DotaMinecraft extends JavaPlugin {
 	public World world;
@@ -47,10 +48,13 @@ public class DotaMinecraft extends JavaPlugin {
 	public boolean removeMobArmor = false;
 	public boolean giveMobsHelmet = false;
 
+	public static Logger log;
+
 	//Red is 1
 	//Blue is 2
 
 	public void onEnable() {
+		log = this.getLogger();
 		this.saveDefaultConfig();
 		FileConfiguration config = this.getConfig();
 		config.options().copyDefaults(true);
