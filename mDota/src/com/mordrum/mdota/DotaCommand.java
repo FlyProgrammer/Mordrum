@@ -80,6 +80,7 @@ public class DotaCommand implements CommandExecutor {
 						plugin.RedCount++;
 						plugin.playerlist.put(player.getName(), 1);
 						player.setPlayerListName(ChatColor.RED + player.getName());
+						player.setDisplayName(ChatColor.RED + player.getName());
 						player.teleport(plugin.RedPoint);
 						player.setBedSpawnLocation(plugin.RedBed);
 						plugin.broadcastMessage(player.getName() + " has joined team " + ChatColor.RED + "Red.");
@@ -89,6 +90,7 @@ public class DotaCommand implements CommandExecutor {
 						plugin.BlueCount++;
 						plugin.playerlist.put(player.getName(), 2);
 						player.setPlayerListName(ChatColor.BLUE + player.getName());
+						player.setDisplayName(ChatColor.BLUE + player.getName());
 						player.teleport(plugin.BluePoint);
 						player.setBedSpawnLocation(plugin.BlueBed);
 						plugin.broadcastMessage(player.getName() + " has joined team " + ChatColor.BLUE + "Blue.");
