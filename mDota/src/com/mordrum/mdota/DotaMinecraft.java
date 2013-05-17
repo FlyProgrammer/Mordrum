@@ -76,14 +76,6 @@ public class DotaMinecraft extends JavaPlugin {
 		} else {
 			System.out.println("Dota Minecraft must have Enabled set to true in the config.yml file!");
 		}
-		//TODO rip metrics support out of plugin
-		/*
-		try { // using mcstats.org metrics
-			MetricsLite metrics = new MetricsLite(this);
-			metrics.start();
-		} catch (IOException e) {
-			System.out.println("[Metrics] " + e.getMessage());
-		}  */
 	}
 
 	public void onDisable() {
