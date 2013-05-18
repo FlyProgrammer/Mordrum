@@ -1,0 +1,6 @@
+name: 'mVote'
+main: 'com.mordrum.mvote.Main'
+version: '0.1.2'
+author: 'SirSavary'
+depends: [Votifier], [mChat]
+
