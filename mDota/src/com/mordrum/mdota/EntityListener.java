@@ -270,9 +270,11 @@ public class EntityListener implements Listener {
 						if (turretname.equals("Red Nexus")) {
 							plugin.broadcastMessage(ChatColor.BLUE + "Blue Team has won!");
 							plugin.GameInProgress = false;
+							plugin.resetMap();
 						} else if (turretname.equals("Blue Nexus")) {
 							plugin.broadcastMessage(ChatColor.RED + "Red Team has won!");
 							plugin.GameInProgress = false;
+							plugin.resetMap();
 						}
 					}
 				}

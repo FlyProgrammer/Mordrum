@@ -120,7 +120,7 @@ public class DotaCommand implements CommandExecutor {
 						plugin.playerdeathitems.clear();
 						plugin.playerdeatharmor.clear();
 						plugin.broadcastMessage("Dota world is being restarted!");
-						//TODO add world restart logic
+						plugin.resetMap();
 
 						PluginListener.setupWorld(plugin);
 					}

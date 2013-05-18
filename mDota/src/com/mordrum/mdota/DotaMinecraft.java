@@ -2,6 +2,7 @@ package com.mordrum.mdota;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -44,6 +45,8 @@ public class DotaMinecraft extends JavaPlugin {
 	public PluginManager pm = null;
 	public boolean RecallEnabled = false;
 	public int RecallDelay = 6;
+
+	public boolean isResetting = false;
 
 	public boolean removeMobArmor = false;
 	public boolean giveMobsHelmet = false;
@@ -96,5 +99,30 @@ public class DotaMinecraft extends JavaPlugin {
 		for (Player p : world.getPlayers()) {
 			p.sendMessage(message);
 		}
+	}
+
+	public void resetMap() {
+		if (!isResetting) {
+			isResetting = true;
+			for (Player p : getServer().getOnlinePlayers()) {
+				p.performCommand("server survival");
+			}
+			unloadMap(WorldName);
+			loadMap(WorldName);
+			isResetting = false;
+		}
+	}
+
+	public void unloadMap(String mapname) {
+		if (getServer().unloadWorld(getServer().getWorld(mapname), false)) {
+			log.info("Successfully unloaded " + mapname);
+		} else {
+			log.severe("COULD NOT UNLOAD " + mapname);
+		}
+	}
+
+	//Loading maps (MUST BE CALLED AFTER UNLOAD MAPS TO FINISH THE ROLLBACK PROCESS)
+	public void loadMap(String mapname) {
+		getServer().createWorld(new WorldCreator(mapname));
 	}
 }
