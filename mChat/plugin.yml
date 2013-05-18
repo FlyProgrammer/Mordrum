@@ -1,0 +1,10 @@
+name: 'mChat'
+main: 'com.mordrum.mchat.Main'
+version: '0.2'
+author: 'SirSavary'
+
+commands:
+  channel:
+    description: Brick.
+    aliases: [ch]
+    usage: /channel
