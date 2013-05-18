@@ -25,25 +25,24 @@ public class DrugListener implements Listener {
 	@EventHandler
 	public void OnInteract(PlayerInteractEvent e) {
 		ItemStack itemInHand = e.getPlayer().getItemInHand();
-		if (itemInHand == null) return; //If the player is not holding anything, exit the method
-		Action action = e.getAction();
-		if (action == Action.RIGHT_CLICK_BLOCK) { //Player may be attempting to fertilize a drug
-			if (!DrugHandler.HandleFertilization(e.getClickedBlock(), e.getPlayer())) { //No fertilization occurred
-				e.setCancelled(DrugHandler.HandleConsumption(itemInHand, e.getPlayer())); //Check for consumption
+		if (itemInHand != null) { //If the player is not holding anything, exit the method
+			Action action = e.getAction();
+			if (action == Action.RIGHT_CLICK_BLOCK) { //Player may be attempting to fertilize a drug
+				if (!DrugHandler.HandleFertilization(e.getClickedBlock(), e.getPlayer())) { //No fertilization occurred
+					e.setCancelled(DrugHandler.HandleConsumption(itemInHand, e.getPlayer())); //Check for consumption
+				} else {
+					e.setCancelled(true); //Fertilization occurred
+				}
+			} else if (action == Action.RIGHT_CLICK_AIR) { //Player may be attempting to consume a drug
+				e.setCancelled(DrugHandler.HandleConsumption(itemInHand, e.getPlayer())); //Check for consumption, cancel event if it occured
 			}
-			else {
-				e.setCancelled(true); //Fertilization occurred
-			}
-		}
-		else if (action == Action.RIGHT_CLICK_AIR) { //Player may be attempting to consume a drug
-			e.setCancelled(DrugHandler.HandleConsumption(itemInHand, e.getPlayer())); //Check for consumption, cancel event if it occured
 		}
 	}
 
 	/*
 	Checks to see if a drug is being harvested. If this is the case, the event is cancelled as to avoid a dupe glitch
 	 */
-	@EventHandler(priority= EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void OnBlockBreak(BlockBreakEvent e) {
 		e.setCancelled(DrugHandler.HandleHarvesting(e.getBlock()));
 	}
@@ -52,7 +51,7 @@ public class DrugListener implements Listener {
 	Checks to see if a drug is being harvested via water (Semi auto farming). If this is the case, the drug will be
 	set to water to avoid visual glitching.
 	 */
-	@EventHandler(priority= EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void OnWaterBreak(BlockFromToEvent e) {
 		if (e.getBlock().getType() == Material.WATER) {
 			if (DrugHandler.HandleHarvesting(e.getToBlock())) {
