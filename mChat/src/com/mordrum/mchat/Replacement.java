@@ -1,7 +1,7 @@
 package com.mordrum.mchat;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.regex.Pattern;
 
@@ -19,7 +19,7 @@ public abstract class Replacement {
 		this.pattern = Pattern.compile(regex);
 	}
 
-	public abstract String call(Player chatter, PlayerChatEvent event);
+	public abstract String call(Player chatter, AsyncPlayerChatEvent event);
 
 	public Pattern getPattern() {
 		return pattern;
