@@ -39,8 +39,11 @@ public class Question {
 			options.append(ans + ", ");
 		options.delete(options.length() - 2, options.length());
 		respondent.sendMessage(Questioner.messageColor + questionMessage);
-		if (isQuestion) respondent.sendMessage(Questioner.messageColor + "- " + options + "?");
-		else respondent.sendMessage(Questioner.messageColor + "- " + options);
+		if (isQuestion) {
+			respondent.sendMessage(Questioner.messageColor + "- " + options + "?");
+		} else {
+			respondent.sendMessage(Questioner.messageColor + "- " + options);
+		}
 		try {
 			this.wait();
 		} catch (final InterruptedException ex) {
