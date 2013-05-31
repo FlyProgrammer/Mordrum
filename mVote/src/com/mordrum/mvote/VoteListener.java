@@ -6,12 +6,10 @@ import com.mordrum.mlib.reward.PrizeWheel;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -51,7 +49,7 @@ public class VoteListener implements Listener {
 			Main.server.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
 				@Override
 				public void run() {
-					if (!Questioner.ask(p, ChatColor.YELLOW + "Type anything when you are done voting").equalsIgnoreCase("")) {
+					if (!Questioner.askOpenQuestion(p, ChatColor.YELLOW + "Type anything when you are done voting").equalsIgnoreCase("")) {
 						int totalVotes = voteCountMap.get(p.getName());
 						voteCountMap.remove(p.getName());
 						activeVoters.remove(p.getName());
@@ -76,51 +74,5 @@ public class VoteListener implements Listener {
 		}
 		voteCountMap.put(p.getName(), voteCountMap.get(p.getName()) + 1);
 		p.sendMessage(ChatColor.YELLOW + "Vote received from " + ChatColor.DARK_PURPLE + v.getServiceName());
-	}
-
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onVoteChat(PlayerInteractEvent e) { //Called when Votifier receives a vote
-		if (Main.debug) {
-			if (e.getClickedBlock().getType() == Material.SPONGE) {
-				final Vote v = new Vote();
-				v.setUsername(e.getPlayer().getName());
-				v.setServiceName("Vote Test Service");
-				v.setAddress("TestVoteAddress");
-				final Player p = Main.server.getPlayer(v.getUsername());
-				Main.sql.writeInfo("(TV)Test Vote received: " + v.getUsername());
-				if (p == null) return; //Player was not found
-				if (!activeVoters.contains(p.getName())) {
-					activeVoters.add(p.getName());
-					voteCountMap.put(p.getName(), 0);
-					Main.server.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-						@Override
-						public void run() {
-							if (!Questioner.ask(p, ChatColor.YELLOW + "Type anything when you are done voting").equalsIgnoreCase("")) {
-								int totalVotes = voteCountMap.get(p.getName());
-								voteCountMap.remove(p.getName());
-								activeVoters.remove(p.getName());
-								String formatted = String.format("&5%s &evoted &5%d &etimes!", p.getDisplayName(), totalVotes);
-								Main.server.broadcastMessage(ChatColor.translateAlternateColorCodes('&', formatted));
-								try {
-									String statement = "INSERT OR REPLACE INTO Votes (id, username,totalvotes)" +
-											"VALUES ((select id from Votes where username = '%s')," +
-											"'%s'," +
-											"coalesce((select totalvotes from Votes where username = '%s') + %s, %s))";
-									statement = String.format(statement, p.getName(), p.getName(), p.getName(), totalVotes, totalVotes);
-									PreparedStatement ps = Main.sql.prepare(statement);
-									Main.sql.query(ps);
-								} catch (SQLException e1) {
-									e1.printStackTrace();
-								}
-								p.sendMessage(ChatColor.YELLOW + "Spinning wheel...");
-								wheel.Spin(p, totalVotes);
-							}
-						}
-					});
-				}
-				voteCountMap.put(p.getName(), voteCountMap.get(p.getName()) + 1);
-				p.sendMessage(ChatColor.YELLOW + "Vote received from " + ChatColor.DARK_PURPLE + v.getServiceName());
-			}
-		}
 	}
 }
