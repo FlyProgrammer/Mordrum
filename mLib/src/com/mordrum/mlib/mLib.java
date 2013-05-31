@@ -19,6 +19,7 @@ public class mLib extends JavaPlugin {
 	public static Server server;
 	protected static Questioner questioner;
 	protected static Logger log;
+	private String globalAnnouncementChannel = "GlobalAnnouncement";
 
 	@Override
 	public void onEnable() {
@@ -39,5 +40,6 @@ public class mLib extends JavaPlugin {
 	public static Questioner getQuestioner() {
 		return questioner;
 	}
+
 }
 
