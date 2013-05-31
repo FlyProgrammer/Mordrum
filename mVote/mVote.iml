@@ -9,6 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Bukkit" level="project" />
     <orderEntry type="module" module-name="mChat" />
+    <orderEntry type="module" module-name="mLib" />
   </component>
 </module>
 

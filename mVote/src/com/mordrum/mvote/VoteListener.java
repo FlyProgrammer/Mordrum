@@ -30,7 +30,6 @@ public class VoteListener implements Listener {
 	Main plugin;
 	Questioner q;
 	PrizeWheel wheel;
-	//Pattern pattern;
 
 	public VoteListener(Main instance) {
 		this.plugin = instance;
