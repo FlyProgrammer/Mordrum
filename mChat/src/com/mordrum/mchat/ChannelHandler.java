@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -29,7 +29,7 @@ public class ChannelHandler implements Listener {
 		plugin = instance;
 		setupPermissions();
 
-		Channel chG = new Channel("global", ChatColor.WHITE, "{vote}{townname}{permprefix}{permsuffix}{playermodname}{color}: {msg}", false, "G");
+		Channel chG = new Channel("global", ChatColor.WHITE, "{vote}{permprefix}{permsuffix}{playermodname}{color}: {msg}", false, "G");
 		Channel chM = new Channel("mod", ChatColor.GRAY, "{color}[{nick}]-{permprefix}{permsuffix}}{playermodname}{color}: {msg}", true, "MOD");
 		Channel chA = new Channel("admin", ChatColor.RED, "{color}[{nick}]-{permprefix}{permsuffix}{playermodname}{color}: {msg}", true, "ADM");
 
@@ -40,29 +40,8 @@ public class ChannelHandler implements Listener {
 		RegisterDefaultReplacements();
 	}
 
-	/*@EventHandler
-	public void onPlayerChat(PlayerChatEvent e) {
-		if (e.isCancelled()) {
-			return;
-		}
-			Channel ch = getActiveChannel(e.getPlayer().getName());
-			String parsedString = mChat.ParseString(ch.getFormat(), e.getPlayer(), e);
-			ArrayList<String> listenerList = ch.getListeners();
-			for (String s : ch.getListeners()) {
-				Player p = Main.server.getPlayerExact(s);
-				if (p == null) {
-					ch.removeListener(s);
-					mChat.activeChannel.remove(s);
-				}
-				else {
-					p.sendMessage(parsedString);
-				}
-			}
-			e.setCancelled(true);
-	}*/
-
 	@EventHandler
-	public void onPlayerChat(PlayerChatEvent e) {
+	public void onPlayerChat(AsyncPlayerChatEvent e) {
 		if (e.isCancelled()) {
 			return;
 		}
@@ -78,6 +57,7 @@ public class ChannelHandler implements Listener {
 				p.sendMessage(parsedString);
 			}
 		}
+		plugin.bungeeComunicator.TransmitChatMessage(parsedString);
 		e.setCancelled(true);
 	}
 
@@ -130,6 +110,12 @@ public class ChannelHandler implements Listener {
 			mChat.channels.get("global").addListener(p.getName());
 		}
 
+		for (Channel c : mChat.channels.values()) {
+			if (p.hasPermission("mchat." + c.getName() + ".autojoin")) {
+				mChat.AddListenerToChannel(p, c);
+			}
+		}
+
 	}
 
 	@EventHandler
@@ -158,38 +144,38 @@ public class ChannelHandler implements Listener {
 	private void RegisterDefaultReplacements() {
 		mChat.RegisterNewReplacement(new Replacement("playername") { //Register {playername}
 			@Override
-			public String call(Player chatter, PlayerChatEvent event) {
-				return chatter.getName() + ChatColor.RESET;
+			public String call(Player chatter, AsyncPlayerChatEvent event) {
+				return new StringBuilder().append(chatter.getName()).append(ChatColor.RESET).toString();
 			}
 		});
 		mChat.RegisterNewReplacement(new Replacement("playermodname") { //Register {playername}
 			@Override
-			public String call(Player chatter, PlayerChatEvent event) {
+			public String call(Player chatter, AsyncPlayerChatEvent event) {
 				return chatter.getDisplayName() + ChatColor.RESET;
 			}
 		});
 		mChat.RegisterNewReplacement(new Replacement("world") { //Register {world}
 			@Override
-			public String call(Player chatter, PlayerChatEvent event) {
+			public String call(Player chatter, AsyncPlayerChatEvent event) {
 				return chatter.getWorld().getName() + ChatColor.RESET;
 			}
 		});
 		mChat.RegisterNewReplacement(new Replacement("color") { //Register {color}
 			@Override
-			public String call(Player chatter, PlayerChatEvent event) {
+			public String call(Player chatter, AsyncPlayerChatEvent event) {
 				return mChat.channels.get(mChat.activeChannel.get(chatter.getName())).getColor() + "";
 			}
 		});
 		mChat.RegisterNewReplacement(new Replacement("nick") { //Register {nick}
 			@Override
-			public String call(Player chatter, PlayerChatEvent event) {
+			public String call(Player chatter, AsyncPlayerChatEvent event) {
 				return mChat.channels.get(mChat.activeChannel.get(chatter.getName())).getNickname();
 			}
 		});
 
 		mChat.RegisterNewReplacement(new Replacement("permprefix") { //Register {permprefix}
 			@Override
-			public String call(Player chatter, PlayerChatEvent event) {
+			public String call(Player chatter, AsyncPlayerChatEvent event) {
 				String s = chat.getPlayerPrefix(chatter);
 				if (s.equalsIgnoreCase("")) s = chat.getGroupPrefix(chatter.getWorld(), chat.getPrimaryGroup(chatter));
 				return s;
@@ -197,7 +183,7 @@ public class ChannelHandler implements Listener {
 		});
 		mChat.RegisterNewReplacement(new Replacement("permsuffix") { //Register {permsuffix}
 			@Override
-			public String call(Player chatter, PlayerChatEvent event) {
+			public String call(Player chatter, AsyncPlayerChatEvent event) {
 				String s = chat.getPlayerSuffix(chatter);
 				if (s.equalsIgnoreCase("")) chat.getGroupSuffix(chatter.getWorld(), chat.getPrimaryGroup(chatter));
 				return s;

@@ -20,6 +20,8 @@ public class Main extends JavaPlugin {
 	//protected static SQLite sql;
 	protected static Logger log;
 	protected static CommandHandler cmdHandler;
+	public static String adflyURL;
+	BungeeCommunicator bungeeComunicator;
 
 	@Override
 	public void onEnable() {
@@ -28,8 +30,10 @@ public class Main extends JavaPlugin {
 		mChat.Initialize();
 		cmdHandler = new CommandHandler(this);
 		cmdHandler.registerCommands(new CommandSet());
-
+		adflyURL = "http://api.adf.ly/api.php?key=8f2016913e96f23d15530fbae94ce14f&uid=805961&advert_type=int&domain=adf.ly";
+		bungeeComunicator = new BungeeCommunicator(this);
 		server.getPluginManager().registerEvents(new ChannelHandler(this), this);
+
 		/*sql = new SQLite(log,
 				"[mChat] ",
 				this.getDataFolder().getAbsolutePath(),
