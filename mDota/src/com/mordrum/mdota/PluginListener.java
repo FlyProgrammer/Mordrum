@@ -46,19 +46,19 @@ public class PluginListener implements Listener {
 
 	public static void LoadPlugin(DotaMinecraft plugin) {
 		if (plugin.getServer().getWorld(plugin.WorldName) == null) {
-			System.out.println("Specified world does not exist!");
+			DotaMinecraft.log.info("Specified world does not exist!");
 			plugin.Enabled = false;
 			return;
 		}
 		;
 
 		setupWorld(plugin);
-
+		DotaMinecraft.log.info("Plugin loaded and shit");
 		plugin.pm.registerEvents(new EntityListener(plugin), plugin);
 		plugin.pm.registerEvents(new BlockListener(plugin), plugin);
 		plugin.getCommand("dota").setExecutor(new DotaCommand(plugin));
 		plugin.getCommand("t").setExecutor(new TCommand(plugin));
-		System.out.println("Dota Minecraft by Scyntrus Loaded!");
+		DotaMinecraft.log.info("Dota Minecraft by Scyntrus Loaded!");
 
 	}
 }

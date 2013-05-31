@@ -28,12 +28,18 @@ public class EntityListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
+		if (plugin.playerlist.containsKey(player.getName())) { //if they are a current part of the game
+			ChatColor nameColor = ChatColor.WHITE;
+			int teamID = plugin.playerlist.get(player.getName());
+			if (teamID == 1) nameColor = ChatColor.RED;
+			else nameColor = ChatColor.BLUE;
+			player.setDisplayName(nameColor + player.getName());
+			return;
+		}
+		//Otherwise, sanitize everything
 		plugin.playerlist.remove(player.getName());
 		plugin.playerkills.remove(player.getName());
 		plugin.playerdeaths.remove(player.getName());
-		if (!player.getWorld().getName().equals(plugin.WorldName)) {
-			return;
-		}
 		player.teleport(plugin.getServer().getWorld(plugin.WorldName).getSpawnLocation());
 		player.setBedSpawnLocation(plugin.getServer().getWorld(plugin.WorldName).getSpawnLocation());
 		player.getInventory().clear();
@@ -47,6 +53,7 @@ public class EntityListener implements Listener {
 				plugin.BlueCount--;
 			}
 		}
+		plugin.playerlist.remove(player.getName());
 	}
 
 	@EventHandler
@@ -100,19 +107,19 @@ public class EntityListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
+		/* Just leave the player alone if they quit for the time being, add more complicated logic later
 		Player player = event.getPlayer();
-		plugin.playerlist.remove(player.getName());
-		plugin.playerkills.remove(player.getName());
-		plugin.playerdeaths.remove(player.getName());
+		//plugin.playerkills.remove(player.getName());
+		//plugin.playerdeaths.remove(player.getName());
 		if (!player.getWorld().getName().equals(plugin.WorldName)) {
 			return;
 		}
-		player.teleport(plugin.getServer().getWorld(plugin.WorldName).getSpawnLocation());
-		player.setBedSpawnLocation(plugin.getServer().getWorld(plugin.WorldName).getSpawnLocation());
-		player.getInventory().clear();
-		player.getInventory().setArmorContents(null);
-		player.setHealth(20);
-		player.setFoodLevel(20);
+		//player.teleport(plugin.getServer().getWorld(plugin.WorldName).getSpawnLocation());
+		//player.setBedSpawnLocation(plugin.getServer().getWorld(plugin.WorldName).getSpawnLocation());
+		//player.getInventory().clear();
+		//player.getInventory().setArmorContents(null);
+		//player.setHealth(20);
+		//player.setFoodLevel(20);
 		if (plugin.playerlist.containsKey(player.getName())) {
 			if (plugin.playerlist.get(player.getName()) == 1) {
 				plugin.RedCount--;
@@ -120,6 +127,9 @@ public class EntityListener implements Listener {
 				plugin.BlueCount--;
 			}
 		}
+
+		plugin.playerlist.remove(player.getName());
+		*/
 	}
 
 	@EventHandler
@@ -265,14 +275,14 @@ public class EntityListener implements Listener {
 				if (tuloc.distance(exloc) < 10) {
 					String turretname = plugin.turretlocations.get(tuloc);
 					if (plugin.turretstates.get(turretname) == false) {
-						plugin.broadcastMessage(turretname + " has been destroyed.");
+						plugin.broadcastMessage(ChatColor.RED + "[DOTA]" + turretname + " has been destroyed.");
 						plugin.turretstates.put(turretname, true);
 						if (turretname.equals("Red Nexus")) {
-							plugin.broadcastMessage(ChatColor.BLUE + "Blue Team has won!");
+							plugin.broadcastMessage(ChatColor.RED + "[DOTA]" + ChatColor.BLUE + "Blue Team has won!");
 							plugin.GameInProgress = false;
 							plugin.resetMap();
 						} else if (turretname.equals("Blue Nexus")) {
-							plugin.broadcastMessage(ChatColor.RED + "Red Team has won!");
+							plugin.broadcastMessage(ChatColor.RED + "[DOTA]" + ChatColor.RED + "Red Team has won!");
 							plugin.GameInProgress = false;
 							plugin.resetMap();
 						}

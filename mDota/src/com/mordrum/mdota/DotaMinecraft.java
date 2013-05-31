@@ -1,5 +1,6 @@
 package com.mordrum.mdota;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -57,12 +58,13 @@ public class DotaMinecraft extends JavaPlugin {
 	//Blue is 2
 
 	public void onEnable() {
+		pm = getServer().getPluginManager();
 		log = this.getLogger();
 		this.saveDefaultConfig();
 		FileConfiguration config = this.getConfig();
 		config.options().copyDefaults(true);
 		this.saveConfig();
-		this.Enabled = config.getBoolean("Enabled");
+		this.Enabled = true;//config.getBoolean("Enabled");
 		this.WorldName = config.getString("WorldName");
 		this.PlayersKeepItems = config.getBoolean("PlayersKeepItems");
 		this.PlayersKeepLevel = config.getBoolean("PlayersKeepLevel");
@@ -72,17 +74,10 @@ public class DotaMinecraft extends JavaPlugin {
 		this.RecallDelay = config.getInt("RecallDelay");
 		this.colorNameTag = config.getBoolean("colorNameTag");
 
-		this.pm = this.getServer().getPluginManager();
 
-		if (this.Enabled) {
-			if (this.pm.isPluginEnabled("Multiverse-Core")) {
-				PluginListener.LoadPlugin(this);
-			} else {
-				this.pm.registerEvents(new PluginListener(this), this);
-			}
-		} else {
-			System.out.println("Dota Minecraft must have Enabled set to true in the config.yml file!");
-		}
+		loadMap(WorldName);
+
+		PluginListener.LoadPlugin(this);
 	}
 
 	public void onDisable() {
@@ -104,12 +99,41 @@ public class DotaMinecraft extends JavaPlugin {
 	public void resetMap() {
 		if (!isResetting) {
 			isResetting = true;
-			for (Player p : getServer().getOnlinePlayers()) {
-				p.performCommand("server survival");
+			for (Player player : getServer().getOnlinePlayers()) {
+				log.info(player.getWorld().getName());
+				player.teleport(getServer().getWorld("safe_map").getSpawnLocation());
+				log.info(player.getWorld().getName());
+				player.setDisplayName(player.getName());
+				playerlist.remove(player.getName());
+				playerkills.remove(player.getName());
+				playerdeaths.remove(player.getName());
+				//player.teleport(getServer().getWorld(WorldName).getSpawnLocation());
+				//player.setBedSpawnLocation(getServer().getWorld(WorldName).getSpawnLocation());
+				player.getInventory().clear();
+				player.getInventory().setArmorContents(null);
+				player.setHealth(20);
+				player.setFoodLevel(20);
+				if (playerlist.containsKey(player.getName())) {
+					if (playerlist.get(player.getName()) == 1) {
+						RedCount--;
+					} else if (playerlist.get(player.getName()) == 2) {
+						BlueCount--;
+					}
+				}
+				playerlist.remove(player.getName());
 			}
+
+			playerlist.clear();
+			playerdeaths.clear();
+			playerkills.clear();
+
+			getServer().broadcastMessage(ChatColor.RED + "[DOTA]" + ChatColor.GOLD + "Map is resetting!");
 			unloadMap(WorldName);
 			loadMap(WorldName);
+			RedCount = 0;
+			BlueCount = 0;
 			isResetting = false;
+			getServer().broadcastMessage(ChatColor.RED + "[DOTA]" + ChatColor.GOLD + "Map reset complete!");
 		}
 	}
 
@@ -118,6 +142,7 @@ public class DotaMinecraft extends JavaPlugin {
 			log.info("Successfully unloaded " + mapname);
 		} else {
 			log.severe("COULD NOT UNLOAD " + mapname);
+			log.severe(getServer().getWorld(mapname).getPlayers().toString());
 		}
 	}
 

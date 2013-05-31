@@ -22,11 +22,12 @@ public class DotaCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] split) {
 		if (sender instanceof Player) {
-			if (!((Player) sender).getWorld().getName().equals(plugin.WorldName)) {
+			/*if (!((Player) sender).getWorld().getName().equals(plugin.WorldName)) {
 				sender.sendMessage("You must be in the Dota world to do this.");
 				return true;
-			}
+			}*/
 			if (split.length == 0) {
+				DotaMinecraft.log.info("No command");
 				return false;
 			}
 			if (split[0].toLowerCase().equals("join")) {
@@ -156,6 +157,7 @@ public class DotaCommand implements CommandExecutor {
 				sender.sendMessage("You will recall to base in " + plugin.RecallDelay + " seconds.");
 				return true;
 			} else {
+				DotaMinecraft.log.info("CMD Not Found");
 				return false;
 			}
 		}
