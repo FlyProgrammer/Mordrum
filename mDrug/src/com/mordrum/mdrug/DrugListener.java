@@ -25,7 +25,7 @@ public class DrugListener implements Listener {
 	@EventHandler
 	public void OnInteract(PlayerInteractEvent e) {
 		ItemStack itemInHand = e.getPlayer().getItemInHand();
-		if (itemInHand != null) { //If the player is not holding anything, exit the method
+		if (itemInHand.getType() != Material.AIR) { //If the player is not holding anything, exit the method
 			Action action = e.getAction();
 			if (action == Action.RIGHT_CLICK_BLOCK) { //Player may be attempting to fertilize a drug
 				if (!DrugHandler.HandleFertilization(e.getClickedBlock(), e.getPlayer())) { //No fertilization occurred
@@ -34,7 +34,9 @@ public class DrugListener implements Listener {
 					e.setCancelled(true); //Fertilization occurred
 				}
 			} else if (action == Action.RIGHT_CLICK_AIR) { //Player may be attempting to consume a drug
-				e.setCancelled(DrugHandler.HandleConsumption(itemInHand, e.getPlayer())); //Check for consumption, cancel event if it occured
+				if (!DrugHandler.HandleConsumption(itemInHand, e.getPlayer())) { //Check for consumption
+					e.setCancelled(DrugHandler.HandleMixing(itemInHand, e.getPlayer()));
+				} else e.setCancelled(true);
 			}
 		}
 	}

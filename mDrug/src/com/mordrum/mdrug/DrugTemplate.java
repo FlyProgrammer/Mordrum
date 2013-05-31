@@ -1,6 +1,7 @@
 package com.mordrum.mdrug;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 /**
@@ -34,11 +35,12 @@ public class DrugTemplate {
 	//The dose that will kill the player
 	private int overDose4;
 	//The ingredients for the drug (if an ingredient is undefined, then it and the ones above it are not needed)
-	private Material ingredients[];
+	private ItemStack ingredients[];
 	//The steps needed to make the drug
 	private ProductionStep steps[];
+	private int effectDuration;
 
-	public DrugTemplate(String name, Material iconMaterial, PotionEffectType positiveEffect1, Material[] ingredients, ProductionStep[] steps) {
+	public DrugTemplate(String name, Material iconMaterial, PotionEffectType positiveEffect1, ItemStack[] ingredients, ProductionStep[] steps) {
 		this.name = name;
 		this.iconMaterial = iconMaterial;
 		this.positiveEffect1 = positiveEffect1;
@@ -195,11 +197,11 @@ public class DrugTemplate {
 		this.overDose4 = overDose4;
 	}
 
-	public Material[] getIngredients() {
+	public ItemStack[] getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(Material[] ingredients) {
+	public void setIngredients(ItemStack[] ingredients) {
 		this.ingredients = ingredients;
 	}
 
@@ -209,5 +211,13 @@ public class DrugTemplate {
 
 	public void setSteps(ProductionStep[] steps) {
 		this.steps = steps;
+	}
+
+	public void setEffectDuration(int effectDuration) {
+		this.effectDuration = effectDuration;
+	}
+
+	public int getEffectDuration() {
+		return effectDuration;
 	}
 }

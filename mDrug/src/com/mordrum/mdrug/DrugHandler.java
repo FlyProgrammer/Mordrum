@@ -28,12 +28,20 @@ public class DrugHandler {
 	public static Boolean HandleFertilization(Block BlockBeingFertilized, Player PlayerFertilizing) {
 		ItemStack itemInHand = PlayerFertilizing.getItemInHand(); //The item in the players hand
 		Material fertilizer = itemInHand.getType(); //The material type of the item
-		switch(BlockBeingFertilized.getType()) { //switch-case statement to make sure only organic blocks are being interacted with
-			case BROWN_MUSHROOM: case RED_MUSHROOM: case LONG_GRASS: case YELLOW_FLOWER: case RED_ROSE: case CACTUS:
-			case PUMPKIN: case MELON_BLOCK: case VINE: case SAPLING:
+		switch (BlockBeingFertilized.getType()) { //switch-case statement to make sure only organic blocks are being interacted with
+			case BROWN_MUSHROOM:
+			case RED_MUSHROOM:
+			case LONG_GRASS:
+			case YELLOW_FLOWER:
+			case RED_ROSE:
+			case CACTUS:
+			case PUMPKIN:
+			case MELON_BLOCK:
+			case VINE:
+			case SAPLING:
 				for (DrugTemplate d : drugMap.values()) { //Loop through all of the available drugs
 					if (d.getSteps()[0].getAction() == ProductionAction.Fertilize) { //Sort out the ones that are initiated via fertilization
-						if (d.getIngredients()[0] == BlockBeingFertilized.getType() && d.getIngredients()[1] == fertilizer) {
+						if (d.getIngredients()[0].getType() == BlockBeingFertilized.getType() && d.getIngredients()[1].getType() == fertilizer) {
 							if (!drugLocations.containsKey(BlockBeingFertilized.getLocation())) {
 								Drug newDrug = new Drug(d);
 								newDrug.NextStep(); //First step was fertilize, which has been done already
@@ -80,6 +88,7 @@ public class DrugHandler {
 
 	public static Boolean HandleConsumption(ItemStack ItemBeingConsumed, Player PlayerConsuming) {
 		ItemStack itemInHand = PlayerConsuming.getItemInHand();
+		if (!itemInHand.getItemMeta().hasDisplayName()) return false;
 		for (DrugTemplate dt : drugMap.values()) {
 			if (itemInHand.getItemMeta().getDisplayName().equalsIgnoreCase(dt.getName())) {
 				itemInHand.setAmount(itemInHand.getAmount() - 1);
@@ -100,5 +109,10 @@ public class DrugHandler {
 
 	public static void RegisterNewDrugTemplate(DrugTemplate dt) {
 		drugMap.put(drugMap.size() + 1, dt);
+	}
+
+	public static Boolean HandleMixing(ItemStack itemInHand, Player player) {
+
+		return false;
 	}
 }
