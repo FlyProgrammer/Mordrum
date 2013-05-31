@@ -1,7 +1,7 @@
-name: 'mChat'
-main: 'com.mordrum.mchat.Main'
-version: '0.2'
-author: 'SirSavary'
+name: mChat
+main: com.mordrum.mchat.Main
+version: 0.3.1
+author: SirSavary
 
 commands:
   channel:
