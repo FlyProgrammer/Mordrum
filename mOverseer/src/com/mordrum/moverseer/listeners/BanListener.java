@@ -3,7 +3,10 @@ package com.mordrum.moverseer.listeners;
 import com.google.common.eventbus.Subscribe;
 import com.mordrum.moverseer.IOHandler;
 import com.mordrum.moverseer.Main;
+import com.mordrum.moverseer.PlayerRecord;
+import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 
@@ -24,8 +27,11 @@ public class BanListener implements Listener {
 	}
 
 	@Subscribe
-	public void onPlayerJoin(PostLoginEvent e) { //Called when a player has logged in
-		ProxiedPlayer p = e.getPlayer();
-
+	public void onPlayerAttemptLogin(LoginEvent e) { //Called when a player has logged in
+        PendingConnection pc = e.getConnection(); //Get the connection
+        if (plugin.getIO().playerRecordMap.containsKey(pc.getName())) { //Check to see if the record exists
+            PlayerRecord pr = plugin.getIO().playerRecordMap.get(pc.getName()); //Fetch the player record
+            if (pr.getBanState()) pc.disconnect(pr.getBanReason()); //If they are banned, disconnect them
+        }
 	}
 }

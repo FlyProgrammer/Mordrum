@@ -23,6 +23,8 @@ public class Main extends Plugin {
 		config = new PluginConfig(this); //Create the config
 		RegisterCommands();
 		RegisterListeners();
+
+        IO = new IOHandler(this);
 	}
 
 	/*
@@ -30,6 +32,7 @@ public class Main extends Plugin {
 	 */
 	public void onDisable() {
 		config = null;
+        IO.SaveRecords();
 	}
 
 	/*
