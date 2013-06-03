@@ -1,6 +1,6 @@
-package com.mordrum.mlib.question;
+package com.mordrum.mcommon.question;
 
-import com.mordrum.mlib.mLib;
+import com.mordrum.mcommon.mCommon;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -10,9 +10,9 @@ public class Questioner {
 	private static final Vector<Question> questions = new Vector<Question>();
 	public static ChatColor messageColor = ChatColor.WHITE;
 
-	public Questioner(mLib main) {
-		mLib.server.getPluginManager().registerEvents(new QuestionerPlayerListener(questions), main);
-		mLib.server.getScheduler().scheduleSyncRepeatingTask(main, new QuestionsReaper(questions), 15000, 15000);
+	public Questioner(mCommon main) {
+		mCommon.server.getPluginManager().registerEvents(new QuestionerPlayerListener(questions), main);
+		mCommon.server.getScheduler().scheduleSyncRepeatingTask(main, new QuestionsReaper(questions), 15000, 15000);
 	}
 
 	public static String ask(Player respondent, String questionMessage, String... answers) {

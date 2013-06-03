@@ -1,4 +1,4 @@
-package com.mordrum.mlib.question;
+package com.mordrum.mcommon.question;
 
 import java.util.Enumeration;
 import java.util.Vector;

@@ -1,4 +1,4 @@
-package com.mordrum.mlib.question;
+package com.mordrum.mcommon.question;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

@@ -1,4 +1,4 @@
-package com.mordrum.mlib.reward;
+package com.mordrum.mcommon.reward;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

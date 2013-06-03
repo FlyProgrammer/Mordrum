@@ -1,4 +1,4 @@
-package com.mordrum.mlib.question;
+package com.mordrum.mcommon.question;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
