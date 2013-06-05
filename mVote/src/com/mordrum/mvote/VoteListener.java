@@ -1,8 +1,8 @@
 package com.mordrum.mvote;
 
-import com.mordrum.mlib.mLib;
-import com.mordrum.mlib.question.Questioner;
-import com.mordrum.mlib.reward.PrizeWheel;
+import com.mordrum.mcommon.mCommon;
+import com.mordrum.mcommon.question.Questioner;
+import com.mordrum.mcommon.reward.PrizeWheel;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 import org.bukkit.ChatColor;
@@ -33,7 +33,7 @@ public class VoteListener implements Listener {
 
 	public VoteListener(Main instance) {
 		this.plugin = instance;
-		q = mLib.getQuestioner();
+		q = mCommon.getQuestioner();
 		wheel = new PrizeWheel();
 	}
 
