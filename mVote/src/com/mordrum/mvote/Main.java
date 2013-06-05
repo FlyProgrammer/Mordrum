@@ -10,9 +10,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import se.ranzdo.bukkit.methodcommand.CommandHandler;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Logger;
 
 /**
@@ -24,7 +22,8 @@ import java.util.logging.Logger;
 public class Main extends JavaPlugin {
 
 	protected static Server server;
-	protected static SQLite sql;
+	//protected static Connection connection;
+    protected static SQLite sql;
 	public static boolean debug = true;
 	protected static CommandHandler cmdHandler;
 	static Logger log;
@@ -65,7 +64,12 @@ public class Main extends JavaPlugin {
 	}
 
 	private void InitializeSQL() {
-		sql = new SQLite(log,
+        /*try {
+            connection = DriverManager.getConnection("jdbc:sqlite:" + this.getDataFolder().getAbsolutePath() + "storage.db");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+        sql = new SQLite(log,
 				"[mVote] ",
 				this.getDataFolder().getAbsolutePath(),
 				"mVote");
