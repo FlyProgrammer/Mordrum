@@ -1,15 +1,14 @@
 <component name="libraryTable">
   <library name="BungeeCord">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../libs/bungeecord-api-1.5-20130519.081602-158.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../libs/BungeeYAML.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../libs/BungeePerms.jar!/" />
+      <root url="jar://$USER_HOME$/Development/Java/libs/bungeecord-api-1.5-20130602.003056-211.jar!/" />
+      <root url="jar://$USER_HOME$/Development/Java/libs/BungeeYAML.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/../../libs/javadocs/BungeeCord.jar!/" />
+      <root url="jar://$USER_HOME$/Development/Java/libs/Javadocs/bungeecord-api-1.5-20130602.003056-211-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../libs/BungeeCord.jar!/" />
+      <root url="jar://$USER_HOME$/Development/Java/libs/Sources/bungeecord-api-1.5-20130602.003056-211-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
