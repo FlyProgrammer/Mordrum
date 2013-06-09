@@ -2,6 +2,7 @@ package com.mordrum.mcommon;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import com.mordrum.mcommon.misc.CommandListener;
 import com.mordrum.mcommon.misc.ConnectionMessagesListener;
 import com.mordrum.mcommon.misc.CreativeOverkillListener;
 import com.mordrum.mcommon.question.Questioner;
@@ -27,25 +28,31 @@ public class mCommon extends JavaPlugin implements PluginMessageListener {
 	protected static Questioner questioner;
 	protected static Logger log;
 	private String globalAnnouncementChannel = "GlobalAnnouncement";
+	private MainConfig config;
 
 	@Override
 	public void onEnable() {
 		server = getServer();
-        PluginManager pm = server.getPluginManager();
+		PluginManager pm = server.getPluginManager();
+		config = new MainConfig(this);
 
-        //Initialize micro-features
-        pm.registerEvents(new ConnectionMessagesListener(), this); //Remove connection messages
-        pm.registerEvents(new CreativeOverkillListener(), this); //Kill mobs instantly when in creative
+		//Initialize micro-features
+		if (config.removeConnectionMessages)
+			pm.registerEvents(new ConnectionMessagesListener(), this); //Remove connection messages
+		if (config.creativeInstantKill)
+			pm.registerEvents(new CreativeOverkillListener(), this); //Kill mobs instantly when in creative
 
+		//Initialize anti-clusterfuck command blocker
+		pm.registerEvents(new CommandListener(this), this); //Prevents /stop and /reload
 
-        //The following listener will enable other micro-features when the plugins that they interact with are enabled
-        pm.registerEvents(new WaitForPluginsListener(this), this);
+		//The following listener will enable other micro-features when the plugins that they interact with are enabled
+		pm.registerEvents(new WaitForPluginsListener(this), this);
 
-        //Initialize APIs
-        questioner = new Questioner(this); //Question API
-        server.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this); //Announce API
+		//Initialize APIs
+		questioner = new Questioner(this); //Question API
+		server.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this); //Announce API
 
-        PluginDescriptionFile desc = getDescription();
+		PluginDescriptionFile desc = getDescription();
 		Log.info("mCommon " + desc.getVersion() + " initialized");
 		Log.info("Current API includes: Stream, Question, Reward");
 	}
@@ -59,16 +66,20 @@ public class mCommon extends JavaPlugin implements PluginMessageListener {
 		return questioner;
 	}
 
-    @Override
-    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
-        ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
+	public MainConfig getPluginConfig() {
+		return config;
+	}
 
-        String channelIn = in.readUTF();
-        if (!channelIn.equalsIgnoreCase(globalAnnouncementChannel)) {
-            return; // avoid indentation, and return early.
-        }
-        String messageToBroadcast = in.readUTF();
-        server.broadcastMessage(messageToBroadcast);
-    }
+	@Override
+	public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+		ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
+
+		String channelIn = in.readUTF();
+		if (!channelIn.equalsIgnoreCase(globalAnnouncementChannel)) {
+			return; // avoid indentation, and return early.
+		}
+		String messageToBroadcast = in.readUTF();
+		server.broadcastMessage(messageToBroadcast);
+	}
 }
 
