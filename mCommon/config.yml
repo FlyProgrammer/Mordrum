@@ -1,0 +1,7 @@
+CreativeInstantKill: true
+RemoveConnectionMessages: true
+RemoveLongGrass: true
+DisableStop: true
+DisableReload: true
+#Kill chat messages for mChat
+KillChatMessages: false
