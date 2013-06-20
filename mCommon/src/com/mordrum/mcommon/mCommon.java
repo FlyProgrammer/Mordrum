@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import com.mordrum.mcommon.misc.CommandListener;
 import com.mordrum.mcommon.misc.ConnectionMessagesListener;
 import com.mordrum.mcommon.misc.CreativeOverkillListener;
+import com.mordrum.mcommon.misc.LongGrassRemoveListener;
 import com.mordrum.mcommon.question.Questioner;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -28,19 +29,20 @@ public class mCommon extends JavaPlugin implements PluginMessageListener {
 	protected static Questioner questioner;
 	protected static Logger log;
 	private String globalAnnouncementChannel = "GlobalAnnouncement";
-	private MainConfig config;
 
 	@Override
 	public void onEnable() {
 		server = getServer();
 		PluginManager pm = server.getPluginManager();
-		config = new MainConfig(this);
+		this.saveDefaultConfig();
 
 		//Initialize micro-features
-		if (config.removeConnectionMessages)
+		if (getConfig().getBoolean("CreativeInstantKill"))
 			pm.registerEvents(new ConnectionMessagesListener(), this); //Remove connection messages
-		if (config.creativeInstantKill)
+		if (getConfig().getBoolean("RemoveConnectionMessages"))
 			pm.registerEvents(new CreativeOverkillListener(), this); //Kill mobs instantly when in creative
+		if (getConfig().getBoolean("RemoveLongGrass"))
+			pm.registerEvents(new LongGrassRemoveListener(this), this); //Removes long grass and handles seeds
 
 		//Initialize anti-clusterfuck command blocker
 		pm.registerEvents(new CommandListener(this), this); //Prevents /stop and /reload
@@ -64,10 +66,6 @@ public class mCommon extends JavaPlugin implements PluginMessageListener {
 
 	public static Questioner getQuestioner() {
 		return questioner;
-	}
-
-	public MainConfig getPluginConfig() {
-		return config;
 	}
 
 	@Override
