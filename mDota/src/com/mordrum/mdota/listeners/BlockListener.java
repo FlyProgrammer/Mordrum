@@ -1,5 +1,6 @@
-package com.mordrum.mdota;
+package com.mordrum.mdota.listeners;
 
+import com.mordrum.mdota.mDota;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
@@ -7,7 +8,6 @@ import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,21 +15,15 @@ import org.bukkit.material.Dispenser;
 import org.bukkit.material.SpawnEgg;
 
 public class BlockListener implements Listener {
-	DotaMinecraft plugin = null;
 
-	public BlockListener(DotaMinecraft plugin) {
+	mDota plugin;
+
+	public BlockListener(mDota plugin) {
 		this.plugin = plugin;
 	}
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (event.getBlock().getWorld().getName().equals(plugin.WorldName)) {
-			event.setCancelled(true);
-		}
-	}
-
-	@EventHandler
-	public void onBlockDamage(BlockDamageEvent event) {
 		if (event.getBlock().getWorld().getName().equals(plugin.WorldName)) {
 			event.setCancelled(true);
 		}
