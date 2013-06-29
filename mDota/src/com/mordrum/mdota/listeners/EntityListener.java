@@ -1,6 +1,7 @@
 package com.mordrum.mdota.listeners;
 
 import com.mordrum.mdota.mDota;
+import com.mordrum.mdota.util.DotaGame;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,38 +27,28 @@ public class EntityListener implements Listener {
 		this.plugin = plugin;
 	}
 
+    /*
+    If the player attempts to enter the enemy's spawn, kill them
+     */
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
-		if (!event.getPlayer().getWorld().getName().equals(plugin.WorldName)) {
-			return;
-		}
 		Location loc = event.getPlayer().getLocation();
 		Integer x = loc.getBlockX();
 		Integer z = loc.getBlockZ();
-		String name = event.getPlayer().getName();
-		event.getPlayer().setFoodLevel(20);
-		if (plugin.playerlist.containsKey(name)) {
-			if (plugin.playerlist.get(name) == 1) {
-				if (plugin.BlueSpawn.contains(x, z)) {
-					event.getPlayer().setHealth(0);
-				}
-			} else if (plugin.playerlist.get(name) == 2) {
-				if (plugin.RedSpawn.contains(x, z)) {
-					event.getPlayer().setHealth(0);
-				}
-			}
-		} else {
-			if (!plugin.WorldSpawn.contains(x, z)) {
-				event.getPlayer().teleport(plugin.getServer().getWorld(plugin.WorldName).getSpawnLocation());
-			}
-		}
-		if (plugin.playerRecallID.containsKey(name) && event.getFrom().distance(event.getTo()) > 0) {
-			if (event.getFrom().distance(event.getTo()) > 0) {
-				plugin.getServer().getScheduler().cancelTask(plugin.playerRecallID.get(name));
-				plugin.playerRecallID.remove(name);
-				event.getPlayer().sendMessage("You have moved, so your recall has been canceled.");
-			}
-		}
+        Player player = event.getPlayer();
+		String playerName = player.getName();
+
+        DotaGame dg = mDota.activeGames.get(mDota.playerList.get(playerName));
+        int teamID = dg.getPlayerTeam().get(playerName);
+
+        if (teamID == 1 && mDota.blueSpawn.contains(x, z)) {
+           player.setHealth(0);
+           player.sendMessage(mDota.tag + "You have been killed for attempting to enter the enemy's spawn!");
+        }
+        else if (teamID == 2 && mDota.redSpawn.contains(x, z)) {
+            player.setHealth(0);
+            player.sendMessage(mDota.tag + "You have been killed for attempting to enter the enemy's spawn!");
+        }
 	}
 
 	@EventHandler
