@@ -7,7 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Spigot" level="project" />
+    <orderEntry type="library" name="Bukkit" level="project" />
+    <orderEntry type="library" name="TagAPI" level="project" />
+    <orderEntry type="module" module-name="mCommon" />
   </component>
 </module>
 

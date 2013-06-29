@@ -1,14 +1,13 @@
 package com.mordrum.mvote;
 
-import com.mordrum.mchat.Replacement;
 import com.mordrum.mchat.mChat;
+import com.mordrum.mchat.util.Replacement;
 import lib.PatPeter.SQLibrary.SQLite;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import se.ranzdo.bukkit.methodcommand.CommandHandler;
 
 import java.sql.*;
 import java.util.logging.Logger;
@@ -25,15 +24,12 @@ public class Main extends JavaPlugin {
 	//protected static Connection connection;
     protected static SQLite sql;
 	public static boolean debug = true;
-	protected static CommandHandler cmdHandler;
 	static Logger log;
 
 	@Override
 	public void onEnable() {
 		server = this.getServer();
 		log = Logger.getLogger("Minecraft");
-		cmdHandler = new CommandHandler(this);
-		cmdHandler.registerCommands(new VoteCommands());
 		server.getPluginManager().registerEvents(new VoteListener(this), this);
 		InitializeSQL();
 		doStuffWithMordrumChat();

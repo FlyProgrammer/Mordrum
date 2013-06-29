@@ -3,7 +3,9 @@ package com.mordrum.mchat;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,7 +19,7 @@ public class Channel {
 	private String format;
 	private Boolean hidden;
 	private Double speakCost;
-	private ArrayList<String> listeners;
+	private Set<String> listeners;
 	private String nickname;
 
 	public Channel(String channelName, ChatColor channelColor, String channelFormat, Boolean isChannelHidden, String channelNickname) {
@@ -26,7 +28,7 @@ public class Channel {
 		this.format = channelFormat;
 		this.hidden = isChannelHidden;
 		this.nickname = channelNickname;
-		listeners = new ArrayList<String>();
+		listeners = new HashSet<>();
 	}
 
 	public Channel(String channelName, ChatColor channelColor, String channelFormat, Boolean isChannelHidden, String channelNickname, Double channelSpeakCost) {
@@ -36,7 +38,7 @@ public class Channel {
 		this.hidden = isChannelHidden;
 		this.speakCost = channelSpeakCost;
 		this.nickname = channelNickname;
-		listeners = new ArrayList<String>();
+		listeners = new HashSet<>();
 	}
 
 	public Boolean getHidden() {

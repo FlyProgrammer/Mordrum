@@ -2,11 +2,9 @@ package com.mordrum.mchat;
 
 //import lib.PatPeter.SQLibrary.SQLite;
 
-import org.bukkit.Server;
-import org.bukkit.plugin.java.JavaPlugin;
-import se.ranzdo.bukkit.methodcommand.CommandHandler;
-
-import java.util.logging.Logger;
+import net.craftminecraft.bungee.bungeeyaml.pluginapi.ConfigurablePlugin;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.plugin.PluginManager;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,44 +12,52 @@ import java.util.logging.Logger;
  * Date: 3/9/13
  * Time: 1:33 PM
  */
-public class Main extends JavaPlugin {
+public class Main extends ConfigurablePlugin {
 
-	protected static Server server;
-	//protected static SQLite sql;
-	protected static Logger log;
-	protected static CommandHandler cmdHandler;
-	public static String adflyURL;
-	BungeeCommunicator bungeeComunicator;
+	public String APIfull, APIkey, APIuid, APIadvertType, APIdomain;
 
 	@Override
 	public void onEnable() {
-		server = this.getServer();
-		log = Logger.getLogger("Minecraft");
-		mChat.Initialize();
-		cmdHandler = new CommandHandler(this);
-		cmdHandler.registerCommands(new CommandSet());
-		adflyURL = "http://api.adf.ly/api.php?key=8f2016913e96f23d15530fbae94ce14f&uid=805961&advert_type=int&domain=adf.ly";
-		bungeeComunicator = new BungeeCommunicator(this);
-		server.getPluginManager().registerEvents(new ChannelHandler(this), this);
+		//TODO commands + listeners + logger + API
 
-		/*sql = new SQLite(log,
-				"[mChat] ",
-				this.getDataFolder().getAbsolutePath(),
-				"mChat");
-		if (sql.open()) {
-			log.info("SQL Open");
-			PreparedStatement ps = null;
-			try {
-				ps = sql.prepare("CREATE TABLE IF NOT EXISTS Votes(Username varchar(255), TotalVotes int);");
-				sql.query(ps);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}*/
+		APIkey = "http://api.adf.ly/api.php?key=" +
+				"8f2016913e96f23d15530fbae94ce14f&" +
+				"uid=805961&" +
+				"advert_type=banner&" +
+				"domain=adf.ly";
 	}
 
-	@Override
-	public void onDisable() {
-		///	sql.close();
+	private void DoConfigStuff() {
+		this.saveDefaultConfig(); //Save the config if one does not exist
+
+		APIkey = getConfig().getString("API.key");
+		APIuid = getConfig().getString("API.uid");
+		APIadvertType = getConfig().getString("API.adverttype");
+		APIdomain = getConfig().getString("API.domain");
+		APIfull = "http://api.adf.ly/api.php?key=" + APIkey + "&uid=" + APIuid +
+				"&advert_type=" + APIadvertType + "&domain=" + APIdomain;
+
+
+	}
+
+	/*
+	Registers plugin channels
+	 */
+	private void registerChannels() {
+		getProxyServer().registerChannel("BungeeChatPlus");
+	}
+
+	/*
+	Returns an instance of the ProxyServer
+	 */
+	public ProxyServer getProxyServer() {
+		return ProxyServer.getInstance();
+	}
+
+	/*
+	Returns the PluginManager
+	 */
+	public PluginManager getPluginManager() {
+		return ProxyServer.getInstance().getPluginManager();
 	}
 }

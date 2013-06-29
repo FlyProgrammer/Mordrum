@@ -7,12 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="mCommon" />
+    <orderEntry type="library" name="Bukkit" level="project" />
     <orderEntry type="module" module-name="mChat" />
-    <orderEntry type="library" name="Spigot" level="project" />
-    <orderEntry type="library" name="Votifier" level="project" />
-    <orderEntry type="library" name="SQLibrary" level="project" />
-    <orderEntry type="library" name="MethodCommand" level="project" />
+    <orderEntry type="module" module-name="mCommon" />
   </component>
 </module>
 

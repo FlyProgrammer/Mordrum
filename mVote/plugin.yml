@@ -1,10 +1,10 @@
-name: 'mVote'
-main: 'com.mordrum.mvote.Main'
-version: '0.2'
-author: 'SirSavary'
-depends: [Votifier, mChat]
+name: mVote
+main: com.mordrum.mvote.Main
+version: 0.2.1
+author: SirSavary
+depends: [Votifier, mChat, mCommon]
 
-commands:
-  vote:
-    description: Vote Command
-    usage: /vote
+#commands:
+#  vote:
+#    description: Vote Command
+#    usage: /vote

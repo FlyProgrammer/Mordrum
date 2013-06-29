@@ -1,8 +1,10 @@
 package com.mordrum.moverseer;
 
-import com.mordrum.moverseer.commands.*;
+import com.mordrum.moverseer.commands.BanCommand;
+import com.mordrum.moverseer.commands.HomeCommand;
+import com.mordrum.moverseer.commands.TeleportCommand;
 import com.mordrum.moverseer.listeners.BanListener;
-import net.md_5.bungee.api.plugin.Plugin;
+import net.craftminecraft.bungee.bungeeyaml.pluginapi.ConfigurablePlugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
 /**
@@ -11,7 +13,7 @@ import net.md_5.bungee.api.plugin.PluginManager;
  * Date: 5/30/13
  * Time: 10:25 PM
  */
-public class Main extends Plugin {
+public class Main extends ConfigurablePlugin {
 
 	PluginConfig config;
 	IOHandler IO;
@@ -24,7 +26,7 @@ public class Main extends Plugin {
 		RegisterCommands();
 		RegisterListeners();
 
-        IO = new IOHandler(this);
+		IO = new IOHandler(this);
 	}
 
 	/*
@@ -32,7 +34,7 @@ public class Main extends Plugin {
 	 */
 	public void onDisable() {
 		config = null;
-        IO.SaveRecords();
+		IO.SaveRecords();
 	}
 
 	/*

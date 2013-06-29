@@ -1,5 +1,6 @@
 package com.mordrum.mchat;
 
+import com.mordrum.mchat.util.Replacement;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -18,15 +19,15 @@ import java.util.regex.Pattern;
  */
 public class mChat {
 
-	protected static List<Replacement> replacements = new ArrayList<Replacement>();
+	protected static List<Replacement> replacements = new ArrayList<>();
 	protected static HashMap<String, Channel> channels;
 	protected static HashMap<String, String> activeChannel;
 	static String globalChannel = "global";
 
 	protected static void Initialize() {
-		replacements = new ArrayList<Replacement>();
-		channels = new HashMap<String, Channel>();
-		activeChannel = new HashMap<String, String>();
+		replacements = new ArrayList<>();
+		channels = new HashMap<>();
+		activeChannel = new HashMap<>();
 	}
 
 	public static void RegisterNewReplacement(Replacement replacement) {
@@ -53,25 +54,7 @@ public class mChat {
 			stringToParse = ChatColor.translateAlternateColorCodes('&', stringToParse);
 		}
 		stringToParse = stringToParse.replaceAll("[{}]", "");
-		stringToParse = ParseLinks(stringToParse);
 		return stringToParse;
-	}
-
-	public static String ParseLinks(String stringToParse) {
-		String[] words = stringToParse.split(" ");
-		String message = stringToParse;
-		for (String word : words) {
-			if ((word.startsWith("http://") || word.startsWith("https://") || word.startsWith("www.") || word.endsWith(".com") || word.endsWith(".net") || word.endsWith(".org"))
-					&& (!(word.endsWith("http://") || word.endsWith("https://") || word.endsWith("www.") || word.startsWith(".com") || word.startsWith(".net") || word.startsWith(".org")))) {
-				if (!word.contains("@")) {
-					String shortenedURL = new AdFlyShortener(Main.adflyURL + "&url=" + word).shorten();
-					if (shortenedURL != null) {
-						message = message.replace(word, shortenedURL);
-					}
-				}
-			}
-		}
-		return message;
 	}
 
 	public static List<Replacement> getReplacements() {
