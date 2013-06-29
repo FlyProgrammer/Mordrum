@@ -1,6 +1,6 @@
 package com.mordrum.mcommon;
 
-import com.mordrum.mcommon.misc.ChatEventListener;
+import com.mordrum.mcommon.microfeatures.ChatEventListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -13,16 +13,16 @@ import org.bukkit.event.server.PluginEnableEvent;
  */
 public class WaitForPluginsListener implements Listener {
 
-    mCommon plugin;
+	mCommon plugin;
 
-    public WaitForPluginsListener(mCommon instance) {
-        plugin = instance;
-    }
+	public WaitForPluginsListener(mCommon instance) {
+		plugin = instance;
+	}
 
-    @EventHandler
-    public void onPluginEnabled(PluginEnableEvent e) {
-        String pluginName = e.getPlugin().getName();
-        if (pluginName.equalsIgnoreCase("mchat")) //If mCommon is enabled, kill chat events
-            mCommon.server.getPluginManager().registerEvents(new ChatEventListener(), plugin);
-    }
+	@EventHandler
+	public void onPluginEnabled(PluginEnableEvent e) {
+		String pluginName = e.getPlugin().getName();
+		if (pluginName.equalsIgnoreCase("mchat") && plugin.getConfig().getBoolean("KillChatMessages")) //If mCommon is enabled, kill chat events
+			mCommon.server.getPluginManager().registerEvents(new ChatEventListener(), plugin);
+	}
 }

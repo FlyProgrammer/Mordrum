@@ -4,6 +4,7 @@
     <root id="archive" name="mChat.jar">
       <element id="module-output" name="mChat" />
       <element id="file-copy" path="$PROJECT_DIR$/mChat/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/mChat/config.yml" />
     </root>
   </artifact>
 </component>

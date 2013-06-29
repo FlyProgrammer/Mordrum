@@ -1,25 +1,37 @@
+#mDota plugin configuration file
 
-# == DotaMinecraft Config ==
+#Prevent blocks from being modified
+PreventBlockModification: true
 
-# SET THIS TO TRUE
-Enabled: false
+#Add team colors to tablist
+TabListColors: true
 
-# The name of the Dota world. May not contain spaces or periods
-WorldName: Minecraft_dota
+#Color the nameplates above the heads of players
+NameplateColors: true
 
-# Color players' nametag according to their team (red or blue)
-colorNameTag: true
+#Strip armor from mobs to make the game more fair
+StripMobArmor: true
 
-# What happens on player death
-PlayersKeepItems: true
-PlayersKeepLevel: true
+#Put helmets on mobs to prevent them from burning in the sunlight
+HelmetOnMobs: true
 
-# Recall command
-RecallEnabled: false
-RecallDelay: 6
+#Use scoreboard to keep track of scores
+UseScoreboard: true
 
-# Remove mob armor (since zombies and skeletons can sometimes spawn with armor)
-removeMobArmor: false
+#Should players retain their items on death?
+RetainItems: false
 
-# Gives mobs leather helmet (so they don't burn in the sun)
-giveMobsHelmet: true
+#Should players retain their armor on death?
+RetainArmor: true
+
+#Should players retain their levels on death?
+RetainLevels: false
+
+#Is recall enabled?
+EnableRecall: false
+
+#Time until recall
+RecallTime: 7
+
+#Max players per game
+MaxPlayersPerGame: 12

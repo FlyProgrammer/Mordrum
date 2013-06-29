@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="BungeeYAML">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../libs/BungeeYAML.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,4 +1,12 @@
 name: mCommon
 main: com.mordrum.mcommon.mCommon
-version: 0.5.3
+version: 0.6
 author: SirSavary
+commands:
+    ekg:
+        description: Server monitor command
+        usage: "/ekg"
+permissions:
+    mcommon.ekg:
+        description: Allows you to use /ekg
+        default: op

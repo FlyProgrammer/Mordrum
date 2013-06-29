@@ -1,7 +1,12 @@
+#Instantly kill mobs while in creative mode
 CreativeInstantKill: true
+#Remove Connection Messages
 RemoveConnectionMessages: true
+#Remove Long Grass between Y:40-128
 RemoveLongGrass: true
+#Prevent /stop
 DisableStop: true
+#Prevent /reload
 DisableReload: true
 #Kill chat messages for mChat
 KillChatMessages: false

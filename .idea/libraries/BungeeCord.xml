@@ -2,7 +2,6 @@
   <library name="BungeeCord">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/../../libs/bungeecord-api-1.5-20130519.081602-158.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../libs/BungeeYAML.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../libs/BungeePerms.jar!/" />
     </CLASSES>
     <JAVADOC>

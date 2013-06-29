@@ -1,5 +1,6 @@
 package com.mordrum.mchat;
 
+import com.mordrum.mchat.util.Replacement;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -29,9 +30,9 @@ public class ChannelHandler implements Listener {
 		plugin = instance;
 		setupPermissions();
 
-		Channel chG = new Channel("global", ChatColor.WHITE, "{vote}{permprefix}{permsuffix}{playermodname}{color}: {msg}", false, "G");
-		Channel chM = new Channel("mod", ChatColor.GRAY, "{color}[{nick}]-{permprefix}{permsuffix}}{playermodname}{color}: {msg}", true, "MOD");
-		Channel chA = new Channel("admin", ChatColor.RED, "{color}[{nick}]-{permprefix}{permsuffix}{playermodname}{color}: {msg}", true, "ADM");
+		Channel chG = new Channel("global", ChatColor.WHITE, plugin.getConfig().getString("globalChannelFormat"), false, "G");
+		Channel chM = new Channel("mod", ChatColor.GRAY, plugin.getConfig().getString("modChannelFormat"), true, "MOD");
+		Channel chA = new Channel("admin", ChatColor.RED, plugin.getConfig().getString("adminChannelFormat"), true, "ADM");
 
 		mChat.RegisterNewChannel(chG);
 		mChat.RegisterNewChannel(chM);
@@ -42,7 +43,7 @@ public class ChannelHandler implements Listener {
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
-		if (e.isCancelled()) {
+		if (e.isCancelled() || e.getPlayer() == null) {
 			return;
 		}
 		Channel ch = getActiveChannel(e.getPlayer().getName());
@@ -57,7 +58,7 @@ public class ChannelHandler implements Listener {
 				p.sendMessage(parsedString);
 			}
 		}
-		plugin.bungeeComunicator.TransmitChatMessage(parsedString);
+		//plugin.bungeeComunicator.TransmitChatMessage(parsedString);
 		e.setCancelled(true);
 	}
 
@@ -120,7 +121,8 @@ public class ChannelHandler implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
-
+		Player p = e.getPlayer();
+		mChat.activeChannel.remove(p.getName());
 	}
 
 	private Channel getActiveChannel(Player p) {

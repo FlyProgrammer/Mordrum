@@ -1,10 +1,8 @@
 package com.mordrum.mvote;
 
+import com.mordrum.mcommon.api.question.Questioner;
+import com.mordrum.mcommon.api.reward.PrizeWheel;
 import com.mordrum.mcommon.mCommon;
-import com.mordrum.mcommon.question.Questioner;
-import com.mordrum.mcommon.reward.PrizeWheel;
-import com.vexsoftware.votifier.model.Vote;
-import com.vexsoftware.votifier.model.VotifierEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,8 +36,8 @@ public class VoteListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
-	public void onVote(VotifierEvent e) { //Called when Votifier receives a vote
-		final Vote v = e.getVote();
+	public void onVote(com.vexsoftware.votifier.model.VotifierEvent e) { //Called when Votifier receives a vote
+		final com.vexsoftware.votifier.model.Vote v = e.getVote();
 		final Player p = Main.server.getPlayer(v.getUsername());
 		if (p == null) return; //Player was not found
 		if (!activeVoters.contains(p.getName())) {

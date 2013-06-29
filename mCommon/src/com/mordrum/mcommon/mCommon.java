@@ -1,12 +1,14 @@
 package com.mordrum.mcommon;
 
 import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.mordrum.mcommon.misc.CommandListener;
-import com.mordrum.mcommon.misc.ConnectionMessagesListener;
-import com.mordrum.mcommon.misc.CreativeOverkillListener;
-import com.mordrum.mcommon.misc.LongGrassRemoveListener;
-import com.mordrum.mcommon.question.Questioner;
+import com.mordrum.mcommon.api.question.Questioner;
+import com.mordrum.mcommon.api.util.ServerMonitor;
+import com.mordrum.mcommon.microfeatures.CommandListener;
+import com.mordrum.mcommon.microfeatures.ConnectionMessagesListener;
+import com.mordrum.mcommon.microfeatures.CreativeOverkillListener;
+import com.mordrum.mcommon.microfeatures.LongGrassRemoveListener;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -28,7 +30,7 @@ public class mCommon extends JavaPlugin implements PluginMessageListener {
 	public static Server server;
 	protected static Questioner questioner;
 	protected static Logger log;
-	private String globalAnnouncementChannel = "GlobalAnnouncement";
+	private static String globalAnnouncementChannel = "GlobalAnnouncement";
 
 	@Override
 	public void onEnable() {
@@ -55,6 +57,8 @@ public class mCommon extends JavaPlugin implements PluginMessageListener {
 		server.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this); //Announce API
 
 		PluginDescriptionFile desc = getDescription();
+		RegisterCommands();
+		ServerMonitor.Initialize(this);
 		Log.info("mCommon " + desc.getVersion() + " initialized");
 		Log.info("Current API includes: Stream, Question, Reward");
 	}
@@ -64,8 +68,23 @@ public class mCommon extends JavaPlugin implements PluginMessageListener {
 		Log.info("mCommon shutting down");
 	}
 
+	private void RegisterCommands() {
+		getCommand("ekg").setExecutor(new Commands());
+	}
+
 	public static Questioner getQuestioner() {
 		return questioner;
+	}
+
+	public void BroadcastGlobalNetworkMessage(String message) {
+		ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+		out.writeUTF("Forward");
+		out.writeUTF("ALL"); // Target Server
+		out.writeUTF(globalAnnouncementChannel);
+		out.writeUTF(message); // Write out the rest of the data.
+
+		server.getOnlinePlayers()[0].sendPluginMessage(this, "BungeeCord", out.toByteArray());
 	}
 
 	@Override

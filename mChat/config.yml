@@ -1,0 +1,6 @@
+globalChannelFormat: '{permprefix}{permsuffix}{playermodname}{color}: {msg}'
+modChannelFormat: '{color}[{nick}]-{permprefix}{permsuffix}}{playermodname}{color}: {msg}'
+adminChannelFormat: '{color}[{nick}]-{permprefix}{permsuffix}{playermodname}{color}: {msg}'
+cloudBroadcastFormat: '[{server}]-{permprefix}{permsuffix}{playermodname}{color}: {msg}'
+useAdLinks: false
+useShortLinks: true
