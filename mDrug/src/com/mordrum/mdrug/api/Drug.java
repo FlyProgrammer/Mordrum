@@ -1,4 +1,4 @@
-package com.mordrum.mdrug;
+package com.mordrum.mdrug.api;
 
 import org.bukkit.Location;
 

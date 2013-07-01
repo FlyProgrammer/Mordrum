@@ -1,5 +1,7 @@
-package com.mordrum.mdrug;
+package com.mordrum.mdrug.util;
 
+import com.mordrum.mdrug.api.Drug;
+import com.mordrum.mdrug.api.DrugTemplate;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,7 +25,6 @@ public class DrugHandler {
 
 	static HashMap<Integer, DrugTemplate> drugMap = new HashMap<>();
 	static HashMap<Location, Drug> drugLocations = new HashMap<>();
-	static HashMap<String, Map<Integer, Integer>> dosageMap = new HashMap<String, Map<Integer, Integer>>();
 
 	public static Boolean HandleFertilization(Block BlockBeingFertilized, Player PlayerFertilizing) {
 		ItemStack itemInHand = PlayerFertilizing.getItemInHand(); //The item in the players hand
@@ -112,7 +113,7 @@ public class DrugHandler {
 	}
 
 	public static Boolean HandleMixing(ItemStack itemInHand, Player player) {
-
+         //TODO implement custom crafting library
 		return false;
 	}
 }

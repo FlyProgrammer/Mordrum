@@ -1,4 +1,4 @@
-package com.mordrum.mdrug;
+package com.mordrum.mdrug.util;
 
 /**
  * Created with IntelliJ IDEA.

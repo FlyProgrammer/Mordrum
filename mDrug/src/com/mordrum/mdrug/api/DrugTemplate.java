@@ -1,8 +1,12 @@
-package com.mordrum.mdrug;
+package com.mordrum.mdrug.api;
 
+import com.mordrum.mdrug.util.ProductionStep;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,12 +44,16 @@ public class DrugTemplate {
 	private ProductionStep steps[];
 	private int effectDuration;
 
+    public Map<String, Integer> playerDoses;
+
 	public DrugTemplate(String name, Material iconMaterial, PotionEffectType positiveEffect1, ItemStack[] ingredients, ProductionStep[] steps) {
 		this.name = name;
 		this.iconMaterial = iconMaterial;
 		this.positiveEffect1 = positiveEffect1;
 		this.ingredients = ingredients;
 		this.steps = steps;
+
+        this.playerDoses = new HashMap<>();
 	}
 
 	public DrugTemplate(DrugTemplate dt) {

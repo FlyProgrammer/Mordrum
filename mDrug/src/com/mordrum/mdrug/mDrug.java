@@ -1,5 +1,10 @@
 package com.mordrum.mdrug;
 
+import com.mordrum.mdrug.api.DrugTemplate;
+import com.mordrum.mdrug.listeners.DrugListener;
+import com.mordrum.mdrug.util.DrugHandler;
+import com.mordrum.mdrug.util.ProductionAction;
+import com.mordrum.mdrug.util.ProductionStep;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,23 +18,25 @@ import java.util.logging.Logger;
  * Date: 5/11/13
  * Time: 4:31 PM
  */
-public class Main extends JavaPlugin {
+public class mDrug extends JavaPlugin {
 
 	static Logger log;
-	static DrugListener dh;
+	static DrugListener drugListener;
 
 	public void onEnable() {
 		log = this.getLogger();
-		AddShrooms();
-		dh = new DrugListener();
-		this.getServer().getPluginManager().registerEvents(dh, this);
+		drugListener = new DrugListener();
+		this.getServer().getPluginManager().registerEvents(drugListener, this);
+
+        AddHardCodedDrugs();
 	}
 
-	public void AddHardCodedDrugs() {
-
+	private void AddHardCodedDrugs() {
+        AddBantam();
+        AddShrooms();
 	}
 
-	public void AddBantam() { //Bantam, green dye and sugar
+	private void AddBantam() { //Bantam, green dye and sugar
 		ProductionStep steps[] = new ProductionStep[1];
 		steps[0] = new ProductionStep(ProductionAction.Combine, 0);
 		ItemStack ingredients[] = new ItemStack[2];
@@ -47,7 +54,7 @@ public class Main extends JavaPlugin {
 		DrugHandler.RegisterNewDrugTemplate(dt);
 	}
 
-	public void AddShrooms() {
+	private void AddShrooms() {
 		ProductionStep steps[] = new ProductionStep[2];
 		steps[0] = new ProductionStep(ProductionAction.Fertilize, 0);
 		steps[1] = new ProductionStep(ProductionAction.Harvest, 0);
