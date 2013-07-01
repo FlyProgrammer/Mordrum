@@ -1,5 +1,6 @@
-package com.mordrum.mdrug;
+package com.mordrum.mdrug.listeners;
 
+import com.mordrum.mdrug.util.DrugHandler;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,7 +23,7 @@ public class DrugListener implements Listener {
 	Checks to see if a player is interacting with a block or the air. Will then check for consumption or fertilization
 	and will cancel the event if either is occuring.
 	 */
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void OnInteract(PlayerInteractEvent e) {
 		ItemStack itemInHand = e.getPlayer().getItemInHand();
 		if (itemInHand.getType() != Material.AIR) { //If the player is not holding anything, exit the method
@@ -44,7 +45,7 @@ public class DrugListener implements Listener {
 	/*
 	Checks to see if a drug is being harvested. If this is the case, the event is cancelled as to avoid a dupe glitch
 	 */
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void OnBlockBreak(BlockBreakEvent e) {
 		e.setCancelled(DrugHandler.HandleHarvesting(e.getBlock()));
 	}
@@ -53,7 +54,7 @@ public class DrugListener implements Listener {
 	Checks to see if a drug is being harvested via water (Semi auto farming). If this is the case, the drug will be
 	set to water to avoid visual glitching.
 	 */
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void OnWaterBreak(BlockFromToEvent e) {
 		if (e.getBlock().getType() == Material.WATER) {
 			if (DrugHandler.HandleHarvesting(e.getToBlock())) {
