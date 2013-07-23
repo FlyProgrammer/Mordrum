@@ -69,7 +69,8 @@ public class mCommon extends JavaPlugin implements PluginMessageListener {
 	}
 
 	private void RegisterCommands() {
-		getCommand("ekg").setExecutor(new Commands());
+        //TODO update command to use methodcommand
+		//getCommand("ekg").setExecutor(new Commands());
 	}
 
 	public static Questioner getQuestioner() {

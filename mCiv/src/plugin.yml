@@ -1,0 +1,25 @@
+name: mCiv
+main: com.mordrum.mdota.mDota SirSavary
+version: 0.1
+commands:
+    province:
+        description: Dota commands
+        usage: "/dota [join|restart|score|recall]"
+    town:
+        description: Team chat
+        usage: "/t message"
+    resident:
+    mayor:
+    president:
+    job:
+
+permissions:
+    mdota.restart:
+        description: Allows you to restart the game when it is finished
+        default: false
+    mdota.forcerestart:
+        description: Allows you to restart the game at any time
+        default: false
+    mdota.chooseteam:
+        description: Allows you to choose a team to join
+        default: false

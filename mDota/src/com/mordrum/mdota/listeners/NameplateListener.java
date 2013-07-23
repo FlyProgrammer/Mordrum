@@ -14,23 +14,23 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
  */
 public class NameplateListener implements Listener {
 
-	mDota plugin;
+    mDota plugin;
 
-	public NameplateListener(mDota instance) {
-		plugin = instance;
-	}
+    public NameplateListener(mDota instance) {
+        plugin = instance;
+    }
 
-	@EventHandler
-	public void onPlayerReceiveNameplate(PlayerReceiveNameTagEvent e) {
-		int gameID = mDota.playerList.get(e.getNamedPlayer().getName());
-		DotaGame dg = mDota.activeGames.get(gameID);
-		int teamID = dg.getPlayerTeam().get(e.getNamedPlayer().getName());
-		if (teamID == 1) { //Red team
-			e.setTag(dg.getTeam1().getChatColor() + e.getNamedPlayer().getDisplayName());
-		} else if (teamID == 2) { //Blue team
-			e.setTag(dg.getTeam1().getChatColor() + e.getNamedPlayer().getDisplayName());
-		} else { //Some other team
-			mDota.log.severe("Something went wrong when trying to give a nameplate to " + e.getPlayer().getName());
-		}
-	}
+    @EventHandler
+    public void onPlayerReceiveNameplate(PlayerReceiveNameTagEvent e) {
+        int gameID = mDota.playerList.get(e.getNamedPlayer().getName());
+        DotaGame dg = mDota.activeGames.get(gameID);
+        int teamID = dg.getPlayerTeam().get(e.getNamedPlayer().getName());
+        if (teamID == 1) { //Red team
+            e.setTag(dg.getTeam1().getChatColor() + e.getNamedPlayer().getDisplayName());
+        } else if (teamID == 2) { //Blue team
+            e.setTag(dg.getTeam1().getChatColor() + e.getNamedPlayer().getDisplayName());
+        } else { //Some other team
+            mDota.log.severe("Something went wrong when trying to give a nameplate to " + e.getPlayer().getName());
+        }
+    }
 }

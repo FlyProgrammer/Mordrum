@@ -9,23 +9,19 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class BlockListener implements Listener {
 
-	mDota plugin;
+    mDota plugin;
 
-	public BlockListener(mDota plugin) {
-		this.plugin = plugin;
-	}
+    public BlockListener(mDota plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onBlockBreak(BlockBreakEvent event) {
-		if (event.getBlock().getWorld().getName().equals(plugin.WorldName)) {
-			event.setCancelled(true);
-		}
-	}
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBlockBreak(BlockBreakEvent event) {
+        event.setCancelled(true);
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onBlockPlace(BlockPlaceEvent event) {
-		if (event.getBlock().getWorld().getName().equals(plugin.WorldName)) {
-			event.setCancelled(true);
-		}
-	}
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBlockPlace(BlockPlaceEvent event) {
+        event.setCancelled(true);
+    }
 }

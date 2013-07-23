@@ -35,6 +35,3 @@ RecallTime: 7
 
 #Max players per game
 MaxPlayersPerGame: 12
-
-#Name of the world folder that will be cloned
-CleanMapName: dotaMap
